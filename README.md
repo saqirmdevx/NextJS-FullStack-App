@@ -1,3 +1,19 @@
+Whole APP should be done in 3 Days
+
+# Plans & Stack #
+- NextJs
+- Prisma for Database
+- Apollo Server + GraphQL + Codegen (to generate types)
+- Typescript
+- Optional: Firebase Login / Google OAuth
+- Last: Cypress Testing & Unit Testing using Jest
+
+# Goals
+- Authentification (Firebase or Google OAuth)
+- GraphQL Interaction
+- React App with Login/Register, Add Blog, Find all Blogs, find My blogs, Delete my Blog, Edit my Blog, Like Blog
+- Bonuses: Optimistic UI
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
