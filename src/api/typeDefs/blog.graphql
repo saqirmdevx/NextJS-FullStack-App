@@ -10,11 +10,6 @@ type Blog {
     addTime: Int
 }
 
-type Query {
-    blog(id: Int): Blog
-    blogs: [Blog]
-}
-
 input CreateBlogInput {
     title: String!
     context: String!
@@ -26,8 +21,13 @@ input EditBlogInput {
     context: String
 }
 
+type Query {
+    blog(id: Int): Blog
+    blogs: [Blog]
+}
+
 type Mutation {
-    createBlog(input: CreateBlogInput!): Blog
-    deleteBlog(id: Int!): Blog
-    editBlog(input: EditBlogInput): Blog
+    createBlog(input: CreateBlogInput!): Blog @Auth
+    deleteBlog(id: Int!): Blog @Auth
+    editBlog(input: EditBlogInput): Blog @Auth
 }

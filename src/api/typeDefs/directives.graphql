@@ -1,0 +1,8 @@
+enum UserRole {
+    ADMIN
+    USER
+}
+
+directive @Auth (
+  userRole: [UserRole!] = null
+) on QUERY | FIELD_DEFINITION | MUTATION

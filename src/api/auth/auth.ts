@@ -11,6 +11,9 @@ import { generateToken } from "./jwt";
  * @returns - JWT Token if sucess
  */
 export const login = async (name: string, password: string, context: IRequestContext) => {
+    if (context.user)
+        throw new AuthenticationError("You are loged in");
+
     // Find Existing user in database
     const findUser = await context.prisma.user.findUnique({where: {name}});
     if (!findUser)
@@ -35,6 +38,9 @@ export const login = async (name: string, password: string, context: IRequestCon
  * @returns - JWT Token
  */
 export const register = async (name: string, password: string, context: IRequestContext) => {
+    if (context.user)
+        throw new AuthenticationError("You are loged in");
+
     // Find existing user, duplicates cant be created. Name msut be unique
     const findExisting = await context.prisma.user.findUnique({where: {name}});
     if (findExisting)
@@ -50,7 +56,7 @@ export const register = async (name: string, password: string, context: IRequest
             name,
             hash: hashPass,
             likes: 0,
-            
+
         }
     });
 

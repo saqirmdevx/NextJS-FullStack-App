@@ -116,3 +116,8 @@ export type User = {
   likes?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
 };
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}

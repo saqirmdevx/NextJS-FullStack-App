@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-micro';
-import schema from "../../src/api/utils/schema";
+import {Schema} from "../../src/api/utils/schema";
 import context from "../../src/api/utils/requestContext";
 import { ServerResponse } from 'http';
 import {
@@ -15,7 +15,7 @@ export const config = {
 };
 
 const server = new ApolloServer({
-  schema,
+  schema: Schema,
   context,
   plugins: [
     process.env.NEXT_PUBLIC_NODE_ENV === 'production'

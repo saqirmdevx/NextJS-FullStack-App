@@ -13,10 +13,6 @@ type AuthUser {
     token: String!
 }
 
-type Query {
-    user(id: Int!): User
-}
-
 input CreateUserInput {
     name: String!
     password: String!
@@ -27,8 +23,12 @@ input LoginInput {
     password: String!
 }
 
+type Query {
+    user(id: Int!): User
+}
+
 type Mutation {
     createUser(input: CreateUserInput!): AuthUser!
     login(input: LoginInput!): User
-    likeUser(id: Int!): User
+    likeUser(id: Int!): User @Auth
 }
