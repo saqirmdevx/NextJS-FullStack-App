@@ -2,10 +2,9 @@ import { User } from "@prisma/client";
 import { AuthenticationError } from "apollo-server-micro";
 import JWT from "jsonwebtoken";
 
-interface IJWTTokenData {
+export interface IJWTTokenData {
     id: number
     name: string
-    expTime: number
 }
  
 /**
@@ -22,7 +21,6 @@ export const generateToken = (user: User) => {
     let data: IJWTTokenData = {
         id: user.id,
         name: user.name,
-        expTime: Date.now() // Expiration time
     }
   
     const token = JWT.sign(data, jwtSecretKey);
