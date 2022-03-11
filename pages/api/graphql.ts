@@ -30,7 +30,7 @@ export default async (req: NextApiRequest, res: ServerResponse) => {
 
   const handler = apolloServer.createHandler({
     path: "/api/graphql"
-  });  // highlight-line
+  });
 
   return handler(req, res);
 }
