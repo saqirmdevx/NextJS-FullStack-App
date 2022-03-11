@@ -1,5 +1,5 @@
 import { AuthenticationError } from "apollo-server-micro";
-import { IRequestContext } from "../api/utils/requestContext";
+import { IRequestContext } from "../utils/requestContext";
 import { hash, compare } from "bcrypt";
 import { generateToken } from "./jwt";
 
@@ -21,7 +21,10 @@ export const login = async (name: string, password: string, context: IRequestCon
         return new AuthenticationError("Account with that combination of name or password does not exists");
 
     // Generate Token and send back
-    return generateToken(findUser);
+    return {
+        token: generateToken(findUser),
+        user: findUser,
+    }
 }
 
 /**
@@ -38,7 +41,7 @@ export const register = async (name: string, password: string, context: IRequest
         return new AuthenticationError("Account with name already exists");
 
     // Generate SSH password
-    const saltRound = process.env.BCRYPT_SALT_ROUND || 10;
+    const saltRound = Number(process.env.BCRYPT_SALT_ROUND) || 10;
     const hashPass = await hash(password, saltRound);
 
     // Create User
@@ -46,10 +49,14 @@ export const register = async (name: string, password: string, context: IRequest
         data: {
             name,
             hash: hashPass,
-            likes: 0
+            likes: 0,
+            
         }
     });
 
     // generate JWT token and send back
-    return generateToken(user);
+    return {
+        token: generateToken(user),
+        user
+    }
 }

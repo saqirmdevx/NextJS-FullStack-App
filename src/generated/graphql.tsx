@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -13,6 +12,12 @@ export type Scalars = {
   Float: number;
 };
 
+export type AuthUser = {
+  __typename?: 'AuthUser';
+  token: Scalars['String'];
+  user: User;
+};
+
 export type Blog = {
   __typename?: 'Blog';
   addTime?: Maybe<Scalars['Int']>;
@@ -24,26 +29,45 @@ export type Blog = {
   title: Scalars['String'];
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  createBlog?: Maybe<Blog>;
-  createUser?: Maybe<User>;
-  deleteBlog?: Maybe<Blog>;
-  editBlog?: Maybe<Blog>;
-  likeUser?: Maybe<Scalars['Int']>;
-  signUp?: Maybe<User>;
-};
-
-
-export type MutationCreateBlogArgs = {
+export type CreateBlogInput = {
   context: Scalars['String'];
   title: Scalars['String'];
 };
 
+export type CreateUserInput = {
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type EditBlogInput = {
+  context?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type LoginInput = {
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createBlog?: Maybe<Blog>;
+  createUser: AuthUser;
+  deleteBlog?: Maybe<Blog>;
+  editBlog?: Maybe<Blog>;
+  likeUser?: Maybe<User>;
+  login?: Maybe<User>;
+};
+
+
+export type MutationCreateBlogArgs = {
+  input: CreateBlogInput;
+};
+
 
 export type MutationCreateUserArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: CreateUserInput;
 };
 
 
@@ -53,9 +77,7 @@ export type MutationDeleteBlogArgs = {
 
 
 export type MutationEditBlogArgs = {
-  context: Scalars['String'];
-  id: Scalars['Int'];
-  title?: InputMaybe<Scalars['String']>;
+  input?: InputMaybe<EditBlogInput>;
 };
 
 
@@ -64,9 +86,8 @@ export type MutationLikeUserArgs = {
 };
 
 
-export type MutationSignUpArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+export type MutationLoginArgs = {
+  input: LoginInput;
 };
 
 export type Query = {
@@ -74,7 +95,16 @@ export type Query = {
   blog?: Maybe<Blog>;
   blogs?: Maybe<Array<Maybe<Blog>>>;
   user?: Maybe<User>;
-  users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryBlogArgs = {
+  id?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['Int'];
 };
 
 export type User = {

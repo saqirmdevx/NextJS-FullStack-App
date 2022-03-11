@@ -4,7 +4,7 @@ import resolvers  from "../resolvers";
 
 const schema = makeExecutableSchema({
     typeDefs: mergedTypeDefs,
-    resolvers
+    resolvers,
 })
 
 export default schema

@@ -8,9 +8,13 @@ type User {
     blogs: [Blog]
 }
 
+type AuthUser {
+    user: User!
+    token: String!
+}
+
 type Query {
     user(id: Int!): User
-    users: [User]
 }
 
 input CreateUserInput {
@@ -24,7 +28,7 @@ input LoginInput {
 }
 
 type Mutation {
-    createUser(input: CreateUserInput!): String
-    signUp(input: LoginInput!): User
-    likeUser(id: Int!): Int
+    createUser(input: CreateUserInput!): AuthUser!
+    login(input: LoginInput!): User
+    likeUser(id: Int!): User
 }

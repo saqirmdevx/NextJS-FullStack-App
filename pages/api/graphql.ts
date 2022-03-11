@@ -14,7 +14,7 @@ export const config = {
   },
 };
 
-const createServer = () => new ApolloServer({
+const server = new ApolloServer({
   schema,
   context,
   plugins: [
@@ -24,13 +24,26 @@ const createServer = () => new ApolloServer({
   ],
 });
 
+const startServer = server.start();
+
 export default async (req: NextApiRequest, res: ServerResponse) => {
-  const apolloServer = createServer()
-  await apolloServer.start();
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'https://studio.apollographql.com'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  if (req.method === 'OPTIONS') {
+    res.end();
+    return false
+  }
 
-  const handler = apolloServer.createHandler({
+  await startServer
+
+  await server.createHandler({
     path: "/api/graphql"
-  });
-
-  return handler(req, res);
+  })(req, res)
 }
