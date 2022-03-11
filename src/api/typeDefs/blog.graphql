@@ -1,0 +1,33 @@
+type Blog {
+    id: Int!
+    title: String!
+    context: String!
+    authorId: Int!
+
+    author: User
+
+    likes: Int
+    addTime: Int
+}
+
+type Query {
+    blog(id: Int): Blog
+    blogs: [Blog]
+}
+
+input CreateBlogInput {
+    title: String!
+    context: String!
+}
+
+input EditBlogInput {
+    id: Int!
+    title: String
+    context: String
+}
+
+type Mutation {
+    createBlog(input: CreateBlogInput!): Blog
+    deleteBlog(id: Int!): Blog
+    editBlog(input: EditBlogInput): Blog
+}

@@ -1,0 +1,30 @@
+type User {
+    id: Int!
+    name: String!
+
+    likes: Int
+    created: String! "Date Type"
+
+    blogs: [Blog]
+}
+
+type Query {
+    user(id: Int!): User
+    users: [User]
+}
+
+input CreateUserInput {
+    name: String!
+    password: String!
+}
+
+input LoginInput {
+    name: String!
+    password: String!
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): String
+    signUp(input: LoginInput!): User
+    likeUser(id: Int!): Int
+}

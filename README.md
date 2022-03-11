@@ -5,6 +5,7 @@ Whole APP should be done in 3 Days
 - Prisma for Database
 - Apollo Server + GraphQL + Codegen (to generate types)
 - Typescript
+- JWT Login
 - Optional: Firebase Login / Google OAuth
 - Last: Cypress Testing & Unit Testing using Jest
 
