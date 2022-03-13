@@ -1,7 +1,7 @@
 type Blog {
     id: Int!
     title: String!
-    context: String!
+    body: String!
     authorId: Int!
 
     author: User
@@ -23,7 +23,7 @@ input EditBlogInput {
 
 type Query {
     blog(id: Int!): Blog
-    blogList: [Blog]
+    allBlogs: [Blog]
     authorBlogs(authorId: Int!): [Blog]
 }
 

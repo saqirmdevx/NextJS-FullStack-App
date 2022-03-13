@@ -7,12 +7,12 @@ import editBlog from "./mutation/editBlog";
 import likeBlog from "./mutation/likeBlog";
 import authorBlogs from "./query/authorBlogs";
 import blog from "./query/blog";
-import blogList from "./query/blogList";
+import allBlogs from "./query/allBlogs";
 
 export default {
     Query: {
         blog,
-        blogList,
+        allBlogs,
         authorBlogs
     },
     Mutation: {
@@ -21,7 +21,7 @@ export default {
         editBlog,
         likeBlog
     },
-    Author: {
+    Blog: {
         author: async (parent: Blog, _: undefined, context: IRequestContext) => await context.prisma.user.findUnique({where: { id: parent.authorId}})
     }
 }
