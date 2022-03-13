@@ -30,7 +30,7 @@ export type Blog = {
 };
 
 export type CreateBlogInput = {
-  context: Scalars['String'];
+  body: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -40,7 +40,7 @@ export type CreateUserInput = {
 };
 
 export type EditBlogInput = {
-  context?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
   title?: InputMaybe<Scalars['String']>;
 };
@@ -56,6 +56,7 @@ export type Mutation = {
   createUser: AuthUser;
   deleteBlog?: Maybe<Blog>;
   editBlog?: Maybe<Blog>;
+  likeBlog?: Maybe<Blog>;
   likeUser?: Maybe<User>;
   login?: Maybe<User>;
 };
@@ -77,7 +78,12 @@ export type MutationDeleteBlogArgs = {
 
 
 export type MutationEditBlogArgs = {
-  input?: InputMaybe<EditBlogInput>;
+  input: EditBlogInput;
+};
+
+
+export type MutationLikeBlogArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -92,14 +98,20 @@ export type MutationLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  authorBlogs?: Maybe<Array<Maybe<Blog>>>;
   blog?: Maybe<Blog>;
-  blogs?: Maybe<Array<Maybe<Blog>>>;
+  blogList?: Maybe<Array<Maybe<Blog>>>;
   user?: Maybe<User>;
 };
 
 
+export type QueryAuthorBlogsArgs = {
+  authorId: Scalars['Int'];
+};
+
+
 export type QueryBlogArgs = {
-  id?: InputMaybe<Scalars['Int']>;
+  id: Scalars['Int'];
 };
 
 

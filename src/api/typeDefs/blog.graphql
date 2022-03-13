@@ -12,22 +12,24 @@ type Blog {
 
 input CreateBlogInput {
     title: String!
-    context: String!
+    body: String!
 }
 
 input EditBlogInput {
     id: Int!
     title: String
-    context: String
+    body: String
 }
 
 type Query {
-    blog(id: Int): Blog
-    blogs: [Blog]
+    blog(id: Int!): Blog
+    blogList: [Blog]
+    authorBlogs(authorId: Int!): [Blog]
 }
 
 type Mutation {
     createBlog(input: CreateBlogInput!): Blog @Auth
     deleteBlog(id: Int!): Blog @Auth
-    editBlog(input: EditBlogInput): Blog @Auth
+    editBlog(input: EditBlogInput!): Blog @Auth
+    likeBlog(id: Int!): Blog @Auth
 }

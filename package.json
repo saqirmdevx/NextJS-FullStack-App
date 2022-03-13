@@ -19,6 +19,7 @@
     "codegen": "^0.1.0",
     "graphql": "^16.3.0",
     "graphql-tools": "^8.2.0",
+    "js-yaml": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
     "micro-cors": "^0.1.1",
