@@ -29,6 +29,6 @@ type Query {
 
 type Mutation {
     createUser(input: CreateUserInput!): AuthUser!
-    login(input: LoginInput!): User
+    login(input: LoginInput!): AuthUser
     likeUser(id: Int!): User @Auth
 }

@@ -2,6 +2,6 @@ import { login } from "../../../auth/auth";
 import { MutationLoginArgs } from "../../../../generated/graphql";
 import { IRequestContext } from "../../../utils/requestContext";
 
-const newUser =  async (_: unknown, {input}: MutationLoginArgs, context: IRequestContext) => await login(input.name, input.password, context);
+const userLogin =  async (_: unknown, {input: {name, password}}: MutationLoginArgs, context: IRequestContext) => await login(name, password, context);
 
-export default newUser;
+export default userLogin;
