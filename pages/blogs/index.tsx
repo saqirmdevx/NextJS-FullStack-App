@@ -1,30 +1,21 @@
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-server-micro'
 import type { NextPage } from 'next'
+import { useState } from 'react';
 import { Spinner, Box } from 'theme-ui';
-import { BLOG_FRAGMENT } from '..';
+import { GET_ALL_BLOGS } from '..';
 import { useAuth } from '../../src/auth/AuthProvider';
 import BlogComponent from '../../src/components/Blog';
 import Unauthorized from '../../src/components/Unauthorized';
 import { Blog } from '../../src/generated/graphql'
 
-const GET_MY_BLOGS = gql`
-  query authorBlogs($id: Int!) {
-    authorBlogs(authorId: $id) {
-      ...blogData
-    }
-  }
-  ${BLOG_FRAGMENT}
-`;
-
 const Blogs: NextPage = () => {
   const { isAuth, id, name } = useAuth();
-  const { loading, data, error } = useQuery<{ authorBlogs: Blog[] }>(GET_MY_BLOGS, { variables: { id }, errorPolicy: "ignore" });
+  const { loading, data, error } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS, { variables: { id }, errorPolicy: "ignore" });
 
   if (!isAuth)
     return Unauthorized();
 
-  if (loading || !data?.authorBlogs) {
+  if (loading || !data) {
     return <Spinner sx={{ margin: "auto" }} />
   }
 
@@ -32,20 +23,23 @@ const Blogs: NextPage = () => {
     return <h1> {error.message} </h1>
   }
 
+  if (!data.allBlogs.length)
+    return <h1> No blogs were found </h1>
+
   return (
-    <Box sx={{ width: "40%", margin: "auto" }}>
-      {data.authorBlogs.map(blog => {
-        return <BlogComponent
-          id={blog.id}
-          body={blog.body}
-          title={blog.title}
-          authorName={name || "anonymous"}
-          likes={blog.likes}
-          authorId={blog.authorId}
-          addTime={blog.addTime}
-          key={blog.id}
-        />
-      })}
+    <Box sx={{ width: "50%", margin: "auto" }}>
+      {data.allBlogs.filter(blogs => blogs.authorId === id).map(blog => (
+        <BlogComponent
+            id={blog.id}
+            body={blog.body}
+            title={blog.title}
+            authorName={name || "anonymous"}
+            likes={blog.likes}
+            authorId={blog.authorId}
+            addTime={blog.addTime}
+            key={blog.id}
+          />
+      ))}
     </Box>
   )
 }

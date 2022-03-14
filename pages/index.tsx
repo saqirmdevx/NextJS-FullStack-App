@@ -1,5 +1,4 @@
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-server-micro'
+import { gql, useQuery } from '@apollo/react-hooks'
 import type { NextPage } from 'next'
 import { Box, Spinner } from 'theme-ui';
 import BlogComponent from '../src/components/Blog';
@@ -16,7 +15,7 @@ export const BLOG_FRAGMENT = gql`
   }
 `
 
-const GET_ALL_BLOGS = gql`
+export const GET_ALL_BLOGS = gql`
   {
     allBlogs {
       ...blogData
@@ -41,9 +40,9 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Box sx={{ width: "40%", margin: "auto" }}>
-      {data.allBlogs.map(blog => {
-        return <BlogComponent
+    <Box sx={{ width: "50%", margin: "auto" }}>
+      {data.allBlogs.map(blog => (
+      <BlogComponent
           id={blog.id}
           body={blog.body}
           title={blog.title}
@@ -53,7 +52,7 @@ const Home: NextPage = () => {
           addTime={blog.addTime}
           key={blog.id}
         />
-      })}
+      ))}
     </Box>
   )
 }
