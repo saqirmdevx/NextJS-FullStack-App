@@ -51,6 +51,7 @@ const Login: NextPage = () => {
             /* Reset values **/
             setUsername("");
             setPassword("");
+            setRemember(false);
             return;
         }
 
@@ -94,7 +95,7 @@ const Login: NextPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <Label htmlFor="remember" onClick={() => setRemember(!remember)}>
-                <Checkbox defaultChecked={remember} />
+                <Checkbox checked={remember} onChange={() => setRemember(!remember)} />
                 Remember me
             </Label>
             <Button sx={{marginTop: "18px" }} variant="link" onClick={submitLogin}>Login</Button>
