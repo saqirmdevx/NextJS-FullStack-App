@@ -12,6 +12,7 @@ const GET_ALL_BLOGS = gql`
       body
       title
       addTime
+      likes
       author {
         name
         id

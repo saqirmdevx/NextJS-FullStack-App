@@ -7,12 +7,11 @@ export const theme: Theme = makeTheme({
   ...tailwind,
   links: {
     nav: {
-      width: "100%",
       px: 2,
       py: 1,
+      marginLeft: 10,
       textTransform: 'uppercase',
       letterSpacing: '0.2em',
-      textDecoration: "underline",
     },
   },
   buttons: {

@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
 import { AuthenticationError } from "apollo-server-micro";
-import JWT from "jsonwebtoken";
+import JWT, { JwtPayload } from "jsonwebtoken";
 
-export interface IJWTTokenData {
+export interface IJWTTokenData extends JwtPayload {
     id: number
     name: string
 }
@@ -18,9 +18,10 @@ export const generateToken = (user: User) => {
     if (!jwtSecretKey)
         throw new Error("process.env.JWT_SECRET_KEY in /src/auth/jwt.ts is not defined!");
 
-    let data: IJWTTokenData = {
+    let data: JwtPayload = {
         id: user.id,
         name: user.name,
+
     }
   
     const token = JWT.sign(data, jwtSecretKey);
