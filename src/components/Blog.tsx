@@ -10,7 +10,6 @@ import {
   } from '@fortawesome/fontawesome-svg-core'
 import { useAuth } from "../auth/AuthProvider";
 import { useState } from "react";
-import user from "../api/resolvers/user";
   
 const thumbIcon: IconLookup = { prefix: "fas", iconName: "thumbs-up" }
 const thumbIconDefinition: IconDefinition = findIconDefinition(thumbIcon)
@@ -70,19 +69,29 @@ const BlogComponent = ({title, body, id, authorId, authorName, likes, newArticle
     }
 
     return (
-        <Box sx={{variant: "box.blog" }}>
-            <Flex> 
-                <Heading>{title}</Heading> 
-                {authorId !== undefined && authorId == userId && <Badge variant="accent">Own</Badge> }
-                {newArticle && <Badge variant="accent">New</Badge> }
-            </Flex>
-            <Paragraph sx={{padding: "6px"}}> {body}</Paragraph>
-            <Flex sx={{justifyContent: "flex-end"}}><Text sx={{fontStyle: "italic"}}>{toLocaleTime(addTime)} </Text></Flex>
-            <Flex sx={{justifyContent: "space-between"}}>
-                <Text sx={{fontSize: "1.1em"}} color={isAuth ? "primary" : "text"}> <FontAwesomeIcon icon={thumbIconDefinition} color="primary" onClick={() => submitLikeBlog(id)}/> {likes || 0} </Text> 
-                <Text sx={{fontStyle: "italic"}}> by <b>{authorName} </b></Text>
-            </Flex>
-        </Box>
+        <>
+            {userId !== undefined && userId == authorId &&
+                <Flex sx={{justifyContent: "flex-end", gap: 18, paddingRight: 18, paddingTop: 18}}>
+                    <Button variant="link">Edit</Button>
+                    <Button variant="link" backgroundColor="red">Delete</Button>
+                </Flex>
+            }
+            <Box sx={{variant: "box.blog" }}>
+                <Flex sx={{alignItems: "center", justifyContent: "space-between"}}> 
+                    <Heading>{title}</Heading> 
+                    <Flex sx={{gap: 12}}>
+                        {authorId !== undefined && authorId == userId && <Badge variant="accent">Own</Badge> }
+                        {newArticle && <Badge variant="accent">New</Badge> }
+                    </Flex>
+                </Flex>
+                <Paragraph sx={{padding: "6px"}}> {body}</Paragraph>
+                <Flex sx={{justifyContent: "flex-end"}}><Text sx={{fontStyle: "italic"}}>{toLocaleTime(addTime)} </Text></Flex>
+                <Flex sx={{justifyContent: "space-between"}}>
+                    <Text sx={{fontSize: "1.1em"}} color={isAuth ? "primary" : "text"}> <FontAwesomeIcon icon={thumbIconDefinition} color="primary" onClick={() => submitLikeBlog(id)}/> {likes || 0} </Text> 
+                    <Text sx={{fontStyle: "italic"}}> by <b>{authorName} </b></Text>
+                </Flex>
+            </Box>
+        </>
     )
 }
 

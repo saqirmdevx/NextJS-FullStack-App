@@ -16,10 +16,9 @@ export const theme: Theme = makeTheme({
   },
   buttons: {
     link: {
-      cursor: "inherit",
+      cursor: "pointer",
     },
   },
-  
   box: {
     blog: {
       border: "1px solid black",

@@ -12,6 +12,7 @@ export const BLOG_FRAGMENT = gql`
     title
     addTime
     likes
+    authorId
   }
 `
 
