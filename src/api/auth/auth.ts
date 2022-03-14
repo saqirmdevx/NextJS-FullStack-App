@@ -15,7 +15,7 @@ export const login = async (name: string, password: string, context: IRequestCon
         throw new AuthenticationError("You are loged in");
 
     // Find Existing user in database
-    const findUser = await context.prisma.user.findUnique({where: {name}});
+    const findUser = await context.prisma.user.findUnique({ where: { name } });
     if (!findUser)
         throw new AuthenticationError("Account with that combination of name and password does not exists");
 
@@ -42,7 +42,7 @@ export const register = async (name: string, password: string, context: IRequest
         throw new AuthenticationError("You are loged in");
 
     // Find existing user, duplicates cant be created. Name msut be unique
-    const findExisting = await context.prisma.user.findUnique({where: {name}});
+    const findExisting = await context.prisma.user.findUnique({ where: { name } });
     if (findExisting)
         throw new AuthenticationError("Account with name already exists");
 

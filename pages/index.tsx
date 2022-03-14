@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const { loading, data, error } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
 
   if (loading || !data) {
-    return <Spinner sx={{margin: "auto"}} />
+    return <Spinner sx={{ margin: "auto" }} />
   }
 
   if (error) {
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Box sx={{ width: "40%", margin: "auto"}}>
+    <Box sx={{ width: "40%", margin: "auto" }}>
       {data.allBlogs.map(blog => {
         return <BlogComponent
           id={blog.id}

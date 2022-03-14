@@ -6,7 +6,7 @@ export interface IJWTTokenData extends JwtPayload {
     id: number
     name: string
 }
- 
+
 /**
  * Generate JWT Token based on user data
  * @param user - User data - Prisma user type
@@ -24,8 +24,8 @@ export const generateToken = (user: User) => {
     }
 
     const expirationTime = Math.floor(Date.now() / 1000) + (60 * 150); // Expiration time to 2.5 Hours (150 min)
-  
-    const token = JWT.sign(data, jwtSecretKey, {expiresIn: expirationTime});
+
+    const token = JWT.sign(data, jwtSecretKey, { expiresIn: expirationTime });
 
     return token;
 }

@@ -10,6 +10,16 @@ const NavBar = () => {
                 <NavLink href="/">
                     Home
                 </NavLink>
+                {isAuth &&
+                    <>
+                        <NavLink href="/blogs/">
+                            My blogs
+                        </NavLink>
+                        <NavLink href="/blogs/create">
+                            Create Blog
+                        </NavLink>
+                    </>
+                }
             </Flex>
             <Flex sx={{gap: "20px"}}>
             {!isAuth &&

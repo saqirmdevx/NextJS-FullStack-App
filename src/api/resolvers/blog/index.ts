@@ -1,4 +1,3 @@
-
 import { Blog } from "../../../generated/graphql";
 import { IRequestContext } from "../../utils/requestContext";
 import createBlog from "./mutation/createBlog";
@@ -22,6 +21,6 @@ export default {
         likeBlog
     },
     Blog: {
-        author: async (parent: Blog, _: undefined, context: IRequestContext) => await context.prisma.user.findUnique({where: { id: parent.authorId}})
+        author: async (parent: Blog, _: undefined, context: IRequestContext) => await context.prisma.user.findUnique({ where: { id: parent.authorId } })
     }
 }

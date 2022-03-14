@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-server-micro';
 import type { NextPage } from 'next'
 import Router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Flex, Input, Label, Paragraph, Spinner } from 'theme-ui'
 import { useAuth } from '../src/auth/AuthProvider';
 
@@ -48,10 +48,12 @@ const Register: NextPage = () => {
         }
 
         setLoading(true);
-        const response = await createUser({variables: {
-            name: username,
-            pass: password
-        }, errorPolicy: "all"});
+        const response = await createUser({
+            variables: {
+                name: username,
+                pass: password
+            }, errorPolicy: "all"
+        });
 
         if (response.errors) {
             setResponseMessage(response.errors[0].message);
@@ -63,8 +65,8 @@ const Register: NextPage = () => {
             return;
         }
 
-        const {token} = response.data.login;
-        const {id, name} = response.data.login.user;
+        const { token } = response.data.login;
+        const { id, name } = response.data.login.user;
 
         onLogin({
             id,
@@ -78,26 +80,26 @@ const Register: NextPage = () => {
 
     if (loading) {
         return (
-        <Box as="form" sx={{width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px", textAlign: 'center'}} padding="64px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
-            <Spinner />
-        </Box>
+            <Box as="form" sx={{ width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px", textAlign: 'center' }} padding="64px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
+                <Spinner />
+            </Box>
         )
     }
 
     return (
-        <Flex as="form" sx={{flexDirection: "column", justifyContent: "center", textAlign:"center", width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px"}} padding="18px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
+        <Flex as="form" sx={{ flexDirection: "column", justifyContent: "center", textAlign: "center", width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px" }} padding="18px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
             <h1> Register form </h1>
             <Label htmlFor="username">Username</Label>
-            <Input 
-                name="username" 
+            <Input
+                name="username"
                 mb={3}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
             <Label htmlFor="password">Password</Label>
-            <Input 
-                type="password" 
-                name="password" 
+            <Input
+                type="password"
+                name="password"
                 mb={3}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

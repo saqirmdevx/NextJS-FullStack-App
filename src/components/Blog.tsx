@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-server-micro";
-import { Badge, Box, Container, Flex, Heading, Paragraph, Text } from "theme-ui";
+import { Badge, Box, Flex, Heading, Paragraph, Text } from "theme-ui";
 import { Blog } from "../generated/graphql";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
