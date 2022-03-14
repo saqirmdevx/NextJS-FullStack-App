@@ -23,7 +23,7 @@ model User {
 model Blog {
   id       Int      @id @default(autoincrement())
   title    String
-  body     String
+  body     String   @db.LongText
   author   User     @relation(fields: [authorId], references: [id])
   authorId Int
   created  DateTime @default(now())

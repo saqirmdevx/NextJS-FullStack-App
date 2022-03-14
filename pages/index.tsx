@@ -5,26 +5,33 @@ import { Box, Spinner } from 'theme-ui';
 import BlogComponent from '../src/components/Blog';
 import { Blog } from '../src/generated/graphql'
 
+export const BLOG_FRAGMENT = gql`
+  fragment blogData on Blog {
+    id
+    body
+    title
+    addTime
+    likes
+  }
+`
+
 const GET_ALL_BLOGS = gql`
   {
     allBlogs {
-      id
-      body
-      title
-      addTime
-      likes
+      ...blogData
       author {
         name
         id
       }
     }
   }
+  ${BLOG_FRAGMENT}
 `;
 
 const Home: NextPage = () => {
-  const { loading, data, error } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
+  const { loading, data, error,  } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
 
-  if (loading || !data) {
+  if (loading || !data?.allBlogs) {
     return <Spinner sx={{ margin: "auto" }} />
   }
 
@@ -39,9 +46,10 @@ const Home: NextPage = () => {
           id={blog.id}
           body={blog.body}
           title={blog.title}
-          author={blog.author}
+          authorName={blog.author?.name || "anonymous"}
           likes={blog.likes}
           authorId={blog.authorId}
+          addTime={blog.addTime}
           key={blog.id}
         />
       })}

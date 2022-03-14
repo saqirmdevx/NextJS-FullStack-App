@@ -65,8 +65,8 @@ const Register: NextPage = () => {
             return;
         }
 
-        const { token } = response.data.login;
-        const { id, name } = response.data.login.user;
+        const { token } = response.data.createUser;
+        const { id, name } = response.data.createUser.user;
 
         onLogin({
             id,

@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-server-micro";
-import { Badge, Box, Flex, Heading, Paragraph, Text } from "theme-ui";
+import { Badge, Box, Button, Flex, Heading, Paragraph, Text } from "theme-ui";
 import { Blog } from "../generated/graphql";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -10,11 +10,11 @@ import {
   } from '@fortawesome/fontawesome-svg-core'
 import { useAuth } from "../auth/AuthProvider";
 import { useState } from "react";
+import user from "../api/resolvers/user";
   
 const thumbIcon: IconLookup = { prefix: "fas", iconName: "thumbs-up" }
 const thumbIconDefinition: IconDefinition = findIconDefinition(thumbIcon)
   
-
 const LIKE_PAGE_GQL = gql`
     mutation likeBlog($input: Int!) {
         likeBlog(id: $input) {
@@ -24,12 +24,24 @@ const LIKE_PAGE_GQL = gql`
     }
 `
 
-type BlogProps = Blog;
+interface BlogProps extends Blog {
+    authorName: string
+    newArticle?: boolean
+};
 
-const BlogComponent = ({title, body, id, addTime, author, likes}: BlogProps) => {
+const BlogComponent = ({title, body, id, authorId, authorName, likes, newArticle, addTime}: BlogProps) => {
     const [likeBlog] = useMutation(LIKE_PAGE_GQL);
     const [loading, setLoading] = useState(false);
-    const { isAuth, name, id: userId } = useAuth();
+    const { isAuth, id: userId } = useAuth();
+
+    const toLocaleTime = (time?: number|null) => {
+        if (!time)
+            return;
+
+        const date = new Date(time * 1000);
+
+        return `${date.getDate()}/${date.getMonth() + 1} ${date.getFullYear()}`
+    }
 
     const submitLikeBlog = async (id: number) => {
         if (!isAuth)
@@ -40,10 +52,11 @@ const BlogComponent = ({title, body, id, addTime, author, likes}: BlogProps) => 
 
         setLoading(true);
 
-        const response = await likeBlog({
+        await likeBlog({
             variables: {
                 input: id,
             },
+            errorPolicy: "ignore",
             optimisticResponse: {
                 __typename: "Mutation",
                 likeBlog: {
@@ -58,11 +71,16 @@ const BlogComponent = ({title, body, id, addTime, author, likes}: BlogProps) => 
 
     return (
         <Box sx={{variant: "box.blog" }}>
-            <Heading>{title}</Heading> {author?.id == userId && <Badge variant="accent">Own</Badge> }
+            <Flex> 
+                <Heading>{title}</Heading> 
+                {authorId !== undefined && authorId == userId && <Badge variant="accent">Own</Badge> }
+                {newArticle && <Badge variant="accent">New</Badge> }
+            </Flex>
             <Paragraph sx={{padding: "6px"}}> {body}</Paragraph>
+            <Flex sx={{justifyContent: "flex-end"}}><Text sx={{fontStyle: "italic"}}>{toLocaleTime(addTime)} </Text></Flex>
             <Flex sx={{justifyContent: "space-between"}}>
                 <Text sx={{fontSize: "1.1em"}} color={isAuth ? "primary" : "text"}> <FontAwesomeIcon icon={thumbIconDefinition} color="primary" onClick={() => submitLikeBlog(id)}/> {likes || 0} </Text> 
-                <Text sx={{fontStyle: "italic"}}> by <b>{author?.name} </b></Text>
+                <Text sx={{fontStyle: "italic"}}> by <b>{authorName} </b></Text>
             </Flex>
         </Box>
     )
