@@ -17,11 +17,11 @@ export const login = async (name: string, password: string, context: IRequestCon
     // Find Existing user in database
     const findUser = await context.prisma.user.findUnique({where: {name}});
     if (!findUser)
-        return new AuthenticationError("Account with that combination of name or password does not exists");
+        throw new AuthenticationError("Account with that combination of name and password does not exists");
 
     // compare hashes
     if (!await compare(password, findUser.hash))
-        return new AuthenticationError("Account with that combination of name or password does not exists");
+        throw new AuthenticationError("Account with that combination of name and password does not exists");
 
     // Generate Token and send back
     return {
@@ -44,7 +44,7 @@ export const register = async (name: string, password: string, context: IRequest
     // Find existing user, duplicates cant be created. Name msut be unique
     const findExisting = await context.prisma.user.findUnique({where: {name}});
     if (findExisting)
-        return new AuthenticationError("Account with name already exists");
+        throw new AuthenticationError("Account with name already exists");
 
     // Generate SSH password
     const saltRound = Number(process.env.BCRYPT_SALT_ROUND) || 10;

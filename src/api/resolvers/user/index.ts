@@ -5,10 +5,12 @@ import newUser from "./mutation/createUser";
 import likeUser from "./mutation/likeUser";
 import userLogin from "./mutation/login";
 import user from "./query/user";
+import refreshToken from "./query/userToken";
 
 export default {
     Query: {
         user,
+        refreshToken,
     },
     Mutation: {
         createUser: newUser,

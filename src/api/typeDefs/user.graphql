@@ -25,6 +25,7 @@ input LoginInput {
 
 type Query {
     user(id: Int!): User
+    refreshToken(token: String!): User
 }
 
 type Mutation {

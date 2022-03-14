@@ -23,7 +23,7 @@ if (!prisma) {
 const requestContext: ContextFunction = ({req}) => {
     let user: JWTUser = null;
     if (req.headers?.authorization) 
-        user = decode(req.headers.authorization)
+        user = decode(req.headers.authorization);
 
     // Login here
     return {

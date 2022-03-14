@@ -23,7 +23,7 @@ export type Blog = {
   addTime?: Maybe<Scalars['Int']>;
   author?: Maybe<User>;
   authorId: Scalars['Int'];
-  context: Scalars['String'];
+  body: Scalars['String'];
   id: Scalars['Int'];
   likes?: Maybe<Scalars['Int']>;
   title: Scalars['String'];
@@ -58,7 +58,7 @@ export type Mutation = {
   editBlog?: Maybe<Blog>;
   likeBlog?: Maybe<Blog>;
   likeUser?: Maybe<User>;
-  login?: Maybe<User>;
+  login?: Maybe<AuthUser>;
 };
 
 
@@ -98,9 +98,10 @@ export type MutationLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  allBlogs?: Maybe<Array<Maybe<Blog>>>;
   authorBlogs?: Maybe<Array<Maybe<Blog>>>;
   blog?: Maybe<Blog>;
-  blogList?: Maybe<Array<Maybe<Blog>>>;
+  refreshToken?: Maybe<User>;
   user?: Maybe<User>;
 };
 
@@ -112,6 +113,11 @@ export type QueryAuthorBlogsArgs = {
 
 export type QueryBlogArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryRefreshTokenArgs = {
+  token: Scalars['String'];
 };
 
 
