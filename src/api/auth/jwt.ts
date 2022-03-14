@@ -21,10 +21,11 @@ export const generateToken = (user: User) => {
     let data: JwtPayload = {
         id: user.id,
         name: user.name,
-
     }
+
+    const expirationTime = Math.floor(Date.now() / 1000) + (60 * 150); // Expiration time to 2.5 Hours (150 min)
   
-    const token = JWT.sign(data, jwtSecretKey);
+    const token = JWT.sign(data, jwtSecretKey, {expiresIn: expirationTime});
 
     return token;
 }
