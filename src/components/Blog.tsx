@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-server-micro";
-import { Alert, Badge, Box, Button, Flex, Heading, Paragraph, Text } from "theme-ui";
+import { Alert, Badge, Box, Button, Flex, Heading, NavLink, Paragraph, Text } from "theme-ui";
 import { Blog } from "../generated/graphql";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -121,8 +121,8 @@ const BlogComponent = ({ title, body, id, authorId, authorName, likes, newArticl
         <>
             {userId !== undefined && userId == authorId &&
                 <Flex sx={{ justifyContent: "flex-end", gap: 18, paddingRight: 18, paddingTop: 18 }}>
-                    <Button variant="link">Edit</Button>
-                    <Button variant="link" backgroundColor="red" onClick={() => submitDeleteButton(id)}>Delete</Button>
+                    <NavLink href={`/blogs/edit/${id}`}><Button variant="link">Edit</Button></NavLink>
+                    <NavLink><Button variant="link" backgroundColor="red" onClick={() => submitDeleteButton(id)}>Delete</Button></NavLink>
                 </Flex>
             }
             <Box sx={{ variant: "box.blog" }}>

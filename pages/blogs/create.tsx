@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-micro';
-import type { GetServerSidePropsContext, GetServerSidePropsResult, NextPage } from 'next'
+import type { NextPage } from 'next'
 import { BLOG_FRAGMENT } from '..';
 import BlogEditor from '../../src/components/BlogEditor';
 

@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/react-hooks'
 import type { NextPage } from 'next'
 import { Box, Spinner } from 'theme-ui';
 import BlogComponent from '../src/components/Blog';
+import LoadingPage from '../src/components/Loading';
 import { Blog } from '../src/generated/graphql'
 
 export const BLOG_FRAGMENT = gql`
@@ -29,20 +30,16 @@ export const GET_ALL_BLOGS = gql`
 `;
 
 const Home: NextPage = () => {
-  const { loading, data, error,  } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
+  const { loading, data, error, } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
 
-  if (loading || !data?.allBlogs) {
-    return <Spinner sx={{ margin: "auto" }} />
-  }
-
-  if (error) {
-    return <h1> {error.message} </h1>
+  if (loading || !data || error) {
+    return <LoadingPage error={error} />;
   }
 
   return (
     <Box sx={{ width: "50%", margin: "auto" }}>
       {data.allBlogs.map(blog => (
-      <BlogComponent
+        <BlogComponent
           id={blog.id}
           body={blog.body}
           title={blog.title}
