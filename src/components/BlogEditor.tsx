@@ -31,6 +31,11 @@ const BlogEditor = (props: IBlogEditorProps) => {
             return;
         }
 
+        if (title.length > 40) {
+            setResponseMessage("Title length is limited to 40");
+            return;
+        }
+
         setLoading(true);
         const response = await updateBlogs({
             variables: {
@@ -64,6 +69,7 @@ const BlogEditor = (props: IBlogEditorProps) => {
                 placeholder="Title"
                 name="title"
                 mb={3}
+                maxLength={40}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />

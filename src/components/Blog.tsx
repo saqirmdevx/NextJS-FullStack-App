@@ -133,7 +133,7 @@ const BlogComponent = ({ title, body, id, authorId, authorName, likes, newArticl
                         {newArticle && <Badge variant="accent">New</Badge>}
                     </Flex>
                 </Flex>
-                <Paragraph sx={{ padding: "6px", wordBreak: "break-word"}}> {body}</Paragraph>
+                <Paragraph sx={{ padding: "6px", wordBreak: "break-word", whiteSpace: "pre-wrap"}}> {body}</Paragraph>
                 <Flex sx={{ justifyContent: "flex-end" }}><Text sx={{ fontStyle: "italic" }}>{toLocaleTime(addTime)} </Text></Flex>
                 <Flex sx={{ justifyContent: "space-between" }}>
                     <Text sx={{ fontSize: "1.1em" }} color={isAuth ? "primary" : "text"}> <FontAwesomeIcon icon={thumbIconDefinition} color="primary" onClick={() => submitLikeBlog(id)} /> {likes || 0} </Text>

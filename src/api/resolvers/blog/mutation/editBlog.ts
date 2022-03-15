@@ -14,6 +14,10 @@ const editBlog =  async (_: unknown, {input}: MutationEditBlogArgs, context: IRe
         return new AuthenticationError("Unauthorized");
     }
 
+    if (input.title && input.title.length > 40) {
+        return new UserInputError("Length of title is limited to 40");
+    }
+
     const data = {
         body: input.body || blog.body,
         title: input.title || blog.title
