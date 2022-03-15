@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-micro';
 import type { NextPage } from 'next'
 import Router from 'next/router';
 import { useState } from 'react';
-import { Box, Button, Flex, Input, Label, Paragraph, Spinner, Checkbox } from 'theme-ui'
+import { Box, Button, Flex, Input, Label, Paragraph, Spinner, Checkbox, Heading } from 'theme-ui'
 import { useAuth } from '../src/auth/AuthProvider';
 
 const LOGIN_USER = gql`
@@ -80,7 +80,7 @@ const Login: NextPage = () => {
 
     return (
         <Flex as="form" sx={{ flexDirection: "column", justifyContent: "center", textAlign: "center", width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px" }} padding="18px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
-            <h1> Login form </h1>
+            <Heading> Login form </Heading>
             <Label htmlFor="username">Username</Label>
             <Input
                 name="username"
@@ -100,7 +100,7 @@ const Login: NextPage = () => {
                 <Checkbox checked={remember} onChange={() => setRemember(!remember)} />
                 Remember me
             </Label>
-            <Button sx={{ marginTop: "18px" }} variant="link" onClick={submitLogin}>Login</Button>
+            <Button name="submit"  sx={{ marginTop: "18px" }} variant="link" onClick={submitLogin}>Login</Button>
             <Paragraph color="red"> {responseMessage} </Paragraph>
         </Flex>
     )

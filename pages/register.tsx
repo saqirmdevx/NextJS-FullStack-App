@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-micro';
 import type { NextPage } from 'next'
 import Router from 'next/router';
 import { useState } from 'react';
-import { Box, Button, Flex, Input, Label, Paragraph, Spinner } from 'theme-ui'
+import { Box, Button, Flex, Heading, Input, Label, Paragraph, Spinner } from 'theme-ui'
 import { useAuth } from '../src/auth/AuthProvider';
 
 const CREATE_USER = gql`
@@ -88,7 +88,7 @@ const Register: NextPage = () => {
 
     return (
         <Flex as="form" sx={{ flexDirection: "column", justifyContent: "center", textAlign: "center", width: "40%", margin: "auto", marginTop: "10%", border: "1px solid black", borderRadius: "8px" }} padding="18px" bg="highlight" onSubmit={(e) => e.preventDefault()}>
-            <h1> Register form </h1>
+            <Heading> Register form </Heading>
             <Label htmlFor="username">Username</Label>
             <Input
                 name="username"
@@ -104,7 +104,7 @@ const Register: NextPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button variant="link" onClick={submitRegister}>Register</Button>
+            <Button name="submit" variant="link" onClick={submitRegister}>Register</Button>
             <Paragraph color="red"> {responseMessage} </Paragraph>
         </Flex>
     )
