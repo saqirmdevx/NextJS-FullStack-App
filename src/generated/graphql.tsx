@@ -12,6 +12,11 @@ export type Scalars = {
   Float: number;
 };
 
+export type AllBlogsInput = {
+  count?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+};
+
 export type AuthUser = {
   __typename?: 'AuthUser';
   token: Scalars['String'];
@@ -103,6 +108,11 @@ export type Query = {
   blog?: Maybe<Blog>;
   refreshToken?: Maybe<User>;
   user?: Maybe<User>;
+};
+
+
+export type QueryAllBlogsArgs = {
+  input?: InputMaybe<AllBlogsInput>;
 };
 
 

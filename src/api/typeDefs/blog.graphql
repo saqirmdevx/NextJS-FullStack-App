@@ -21,9 +21,14 @@ input EditBlogInput {
     body: String
 }
 
+input AllBlogsInput {
+    offset: Int
+    count: Int
+}
+
 type Query {
     blog(id: Int!): Blog
-    allBlogs: [Blog]
+    allBlogs(input: AllBlogsInput): [Blog]
     authorBlogs(authorId: Int!): [Blog]
 }
 

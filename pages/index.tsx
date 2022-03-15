@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/react-hooks'
 import type { NextPage } from 'next'
-import { Box, Spinner } from 'theme-ui';
-import BlogComponent from '../src/components/Blog';
+import BlogList from '../src/components/BlogList';
 import LoadingPage from '../src/components/Loading';
+import SkeletonBlogs from '../src/components/SkeletonBlogs';
 import { Blog } from '../src/generated/graphql'
 
 export const BLOG_FRAGMENT = gql`
@@ -17,8 +17,8 @@ export const BLOG_FRAGMENT = gql`
 `
 
 export const GET_ALL_BLOGS = gql`
-  {
-    allBlogs {
+  query ($count: Int, $offset: Int) {
+    allBlogs(input: {count: $count, offset: $offset}) {
       ...blogData
       author {
         name
@@ -32,26 +32,14 @@ export const GET_ALL_BLOGS = gql`
 const Home: NextPage = () => {
   const { loading, data, error, } = useQuery<{ allBlogs: Blog[] }>(GET_ALL_BLOGS);
 
-  if (loading || !data || error) {
+  if (loading)
+    return <SkeletonBlogs />
+
+  if (!data || error) {
     return <LoadingPage error={error} />;
   }
 
-  return (
-    <Box sx={{ width: "50%", margin: "auto" }}>
-      {data.allBlogs.map(blog => (
-        <BlogComponent
-          id={blog.id}
-          body={blog.body}
-          title={blog.title}
-          authorName={blog.author?.name || "anonymous"}
-          likes={blog.likes}
-          authorId={blog.authorId}
-          addTime={blog.addTime}
-          key={blog.id}
-        />
-      ))}
-    </Box>
-  )
+  return BlogList({blogList: data.allBlogs});
 }
 
 export default Home
